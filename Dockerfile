@@ -6,20 +6,22 @@ WORKDIR /usr/src/app
 
 # Install dependencies
 COPY package*.json ./
-RUN npm install --production=false
+RUN npm install
 
 # Copy the rest of the source code
 COPY . .
 
-# Build the frontend (Vite React app)
+# Build the frontend (Vite or React build)
 RUN npm run build
 
-# Environment
-ENV NODE_ENV=production
+# Cloud Run uses PORT env var
 ENV PORT=8080
 
-# Cloud Run listens on 8080
+# Expose the port
 EXPOSE 8080
 
-# Start the app (server.js should use PORT)
+# Start your server
 CMD ["npm", "start"]
+
+fix: add full Dockerfile for Cloud Run deployment
+
